@@ -1,30 +1,53 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app" :class="{ light: !isDark, dark: isDark }">
+    <router-view />
   </div>
-  <router-view />
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isDark: false,
+    };
+  },
+
+  methods: {
+    toggleTheme() {
+      this.isDark = !this.isDark;
+    },
+  },
+
+  created() {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.toggleTheme();
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', this.toggleTheme);
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.light {
+  --bgColor: #fff;
+  --color: #1a1a55;
+}
+.dark {
+  --bgColor: #1a1a55;
+  --color: #fff;
+}
+.app {
+  min-height: 100vh;
+  color: var(--color);
+  font-weight: bold;
+  background-color: var(--bgColor);
+  transition: background-color 0.3s, color 0.3s;
 }
 </style>
