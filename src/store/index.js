@@ -1,8 +1,14 @@
 import { createStore } from 'vuex';
 
 export default createStore({
-  state: {},
-  mutations: {},
+  state: {
+    isDark: false,
+  },
+  mutations: {
+    toggleTheme(state) {
+      state.isDark = !state.isDark;
+    },
+  },
   actions: {},
   modules: {},
 });

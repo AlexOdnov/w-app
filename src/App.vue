@@ -5,18 +5,12 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isDark: false,
-    };
-  },
+import { mapMutations, mapState } from 'vuex';
 
-  methods: {
-    toggleTheme() {
-      this.isDark = !this.isDark;
-    },
-  },
+export default {
+  computed: { ...mapState(['isDark']) },
+
+  methods: { ...mapMutations(['toggleTheme']) },
 
   created() {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
