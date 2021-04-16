@@ -5,20 +5,21 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   computed: { ...mapState(['isDark']) },
 
-  methods: { ...mapMutations(['toggleTheme']) },
+  methods: { ...mapActions(['getTheme']), ...mapMutations(['toggleTheme']) },
 
   created() {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      this.toggleTheme();
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', this.toggleTheme);
+    this.getTheme().catch(() => {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        this.toggleTheme();
+      }
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', this.toggleTheme);
+    });
   },
 };
 </script>

@@ -1,7 +1,12 @@
 <template>
-  <button class="toggler" @click="toggleTheme">
+  <button
+    class="toggler"
+    type="button"
+    aria-label="переключатель темы"
+    @click="toggleTheme"
+  >
     <span
-      class="toggler__thumb toggler__thumb--light"
+      class="toggler__thumb"
       :class="{
         'toggler__thumb--light': !isDark,
         'toggler__thumb--dark': isDark,
@@ -12,6 +17,7 @@
         height="18px"
         aria-hidden="true"
         role="img"
+        focusable="false"
         v-show="!isDark"
       >
         <use :xlink:href="require('../assets/baseIcons.svg') + '#day'"></use>
@@ -21,6 +27,7 @@
         height="18px"
         aria-hidden="true"
         role="img"
+        focusable="false"
         v-show="isDark"
       >
         <use :xlink:href="require('../assets/baseIcons.svg') + '#night'"></use>
@@ -30,18 +37,18 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'ThemeToggler',
 
   computed: mapState(['isDark']),
 
-  methods: mapMutations(['toggleTheme']),
+  methods: mapActions(['toggleTheme']),
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .toggler {
   position: relative;
   display: block;
@@ -51,8 +58,12 @@ export default {
   border: 2px solid var(--color);
   border-radius: 12px;
   background-color: var(--bgColor);
-  transition: color, 0.3s, background-color 0.3s;
+  transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
   outline: none;
+
+  &:hover {
+    box-shadow: 0 0 6px var(--color);
+  }
 
   &:focus-visible {
     box-shadow: 0 0 6px var(--color);
@@ -67,7 +78,7 @@ export default {
   width: 18px;
   height: 18px;
   margin: 1px;
-  transition: left, 0.5s, transform 0.5s;
+  transition: left 0.5s, transform 0.5s;
 }
 .toggler__thumb--light {
   left: 0;
