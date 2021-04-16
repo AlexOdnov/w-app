@@ -1,16 +1,30 @@
 <template>
   <div class="app" :class="{ light: !isDark, dark: isDark }">
+    <site-navigation
+      id="site-navigation"
+      @addCity="addCity"
+      @refreshApp="refreshApp"
+    />
     <router-view />
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
+import SiteNavigation from './components/SiteNavigation.vue';
 
 export default {
+  components: { SiteNavigation },
   computed: { ...mapState(['isDark']) },
 
-  methods: { ...mapActions(['getTheme']), ...mapMutations(['toggleTheme']) },
+  methods: {
+    ...mapActions(['getTheme']),
+    ...mapMutations(['toggleTheme']),
+    addCity() {},
+    refreshApp() {
+      location.reload();
+    },
+  },
 
   created() {
     this.getTheme().catch(() => {
@@ -44,5 +58,9 @@ export default {
   font-weight: bold;
   background-color: var(--bgColor);
   transition: background-color 0.3s, color 0.3s;
+}
+#site-navigation {
+  position: sticky;
+  top: 0;
 }
 </style>
