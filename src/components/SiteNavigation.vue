@@ -81,8 +81,12 @@
 
 <script>
 import ThemeToggler from './ThemeToggler.vue';
+
 export default {
+  name: 'SiteNavigation',
+
   components: { ThemeToggler },
+
   emits: ['addCity', 'refreshApp'],
 
   methods: {
