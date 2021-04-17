@@ -7,6 +7,12 @@ const routes = [
     name: 'Home',
     component: Home,
   },
+  {
+    path: '/city',
+    name: 'City',
+    component: () => import(/* webpackChunkName: "city" */ '../views/City.vue'),
+  },
+  { path: '/:notFound(.*)', redirect: '/' },
 ];
 
 const router = createRouter({
