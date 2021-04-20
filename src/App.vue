@@ -6,23 +6,42 @@
       @refreshApp="refreshApp"
     />
     <router-view />
+    <transition name="modal">
+      <modal v-if="isModalOpen" @closeModal="closeModal" name="добавить город">
+        <add-city-form />
+      </modal>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import SiteNavigation from './components/SiteNavigation.vue';
+import Modal from './components/Modal.vue';
+import AddCityForm from './components/AddCityForm.vue';
 
 export default {
-  components: { SiteNavigation },
+  components: { SiteNavigation, Modal, AddCityForm },
+
+  data() {
+    return {
+      isModalOpen: false,
+    };
+  },
+
   computed: { ...mapState(['isDark']) },
 
   methods: {
-    ...mapActions(['getTheme']),
+    ...mapActions(['getTheme', 'getCities']),
     ...mapMutations(['toggleTheme']),
-    addCity() {},
+    addCity() {
+      this.isModalOpen = true;
+    },
     refreshApp() {
       location.reload();
+    },
+    closeModal() {
+      this.isModalOpen = false;
     },
   },
 
@@ -34,6 +53,7 @@ export default {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       mediaQuery.addEventListener('change', this.toggleTheme);
     });
+    this.getCities();
   },
 };
 </script>
@@ -62,5 +82,14 @@ export default {
 #site-navigation {
   position: sticky;
   top: 0;
+  z-index: 2;
+}
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
 }
 </style>

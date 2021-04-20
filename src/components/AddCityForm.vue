@@ -1,5 +1,5 @@
 <template>
-  <form class="add-city__body" @submit.prevent="addCity">
+  <form class="add-city__body" @submit.prevent="onAddCity">
     <h2 class="add-city__title">Добавьте новый город</h2>
     <div class="add-city__wrapper">
       <input
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'AddCityForm',
 
@@ -37,13 +39,20 @@ export default {
   },
 
   computed: {
+    ...mapState(['cities']),
     isDuplicate() {
-      return false;
+      return this.cities.includes(this.city.toLowerCase());
     },
   },
 
   methods: {
-    addCity() {},
+    ...mapActions(['addCity']),
+    onAddCity() {
+      if (this.isDuplicate) {
+        return;
+      }
+      this.addCity(this.city);
+    },
   },
 };
 </script>

@@ -104,7 +104,7 @@ export default {
 
   methods: {
     deleteCity() {
-      this.$emit('deleteCity');
+      this.$emit('deleteCity', this.cityName);
     },
   },
 };
