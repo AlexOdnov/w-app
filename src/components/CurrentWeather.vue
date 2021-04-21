@@ -10,20 +10,40 @@
       :feels-like="currentWeather.feels_like"
       :description="currentWeather.weather[0].description"
     />
-    <div class="current-weather__wind"></div>
-    <div class="current-weather__pressure"></div>
-    <div class="current-weather__humidity"></div>
-    <div class="current-weather__precipitation"></div>
+    <additional-info
+      title="Ветер"
+      :value="currentWeather.wind_speed"
+      :addition="windDirection"
+    >
+      <template #unit>м/с</template>
+    </additional-info>
+    <additional-info title="Влажность" :value="currentWeather.humidity">
+      <template #unit>
+        <span class="centered">%</span>
+      </template>
+    </additional-info>
+    <additional-info title="Осадки" :value="precipitation">
+      <template #unit>мм</template>
+    </additional-info>
+    <additional-info
+      title="Давление"
+      :value="pressureInmmHg"
+      addition="рт. ст."
+    >
+      <template #unit>мм</template>
+    </additional-info>
   </div>
 </template>
 
 <script>
 import CurrentTemperature from './CurrentTemperature.vue';
+import AdditionalInfo from './AdditionalInfo.vue';
+import { getWindDirection } from '../helpers/getWindDirection.js';
 
 export default {
   name: 'CurrentWeather',
 
-  components: { CurrentTemperature },
+  components: { CurrentTemperature, AdditionalInfo },
 
   props: {
     cityName: {
@@ -50,6 +70,17 @@ export default {
         options
       );
     },
+    pressureInmmHg() {
+      return this.currentWeather.pressure * 0.75;
+    },
+    windDirection() {
+      return getWindDirection(this.currentWeather.wind_deg);
+    },
+    precipitation() {
+      const perc =
+        this.currentWeather.rain?.['1h'] || this.currentWeather.snow?.['1h'];
+      return perc ? perc : 0;
+    },
   },
 };
 </script>
@@ -59,6 +90,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
+  row-gap: 10px;
   padding: 15px;
 
   @media (min-width: 480px) {
@@ -89,5 +121,10 @@ export default {
   grid-column: 1 / -1;
   justify-self: center;
   margin: 20px 0;
+}
+.centered {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 </style>
