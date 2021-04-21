@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ShortCity from '../components/ShortCity.vue';
 
 export default {
@@ -24,13 +24,15 @@ export default {
   components: { ShortCity },
 
   computed: {
-    currentWeathers() {
-      return [];
-    },
+    ...mapState(['currentWeathers']),
   },
 
   methods: {
-    ...mapActions(['removeCity']),
+    ...mapActions(['getCurrentWeathers', 'removeCity']),
+  },
+
+  created() {
+    this.getCurrentWeathers();
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <form class="add-city__body" @submit.prevent="onAddCity">
+  <form class="add-city__body" autocomplete="off" @submit.prevent="onAddCity">
     <h2 class="add-city__title">Добавьте новый город</h2>
     <div class="add-city__wrapper">
       <input
@@ -7,7 +7,7 @@
         type="text"
         id="add-city"
         required
-        v-model="city"
+        v-model="cityName"
       />
       <label class="add-city__label" for="add-city">Название города</label>
       <transition name="error">
@@ -34,14 +34,22 @@ export default {
   data() {
     return {
       isError: false,
-      city: '',
+      cityName: '',
     };
   },
 
   computed: {
     ...mapState(['cities']),
     isDuplicate() {
-      return this.cities.includes(this.city.toLowerCase());
+      return !!this.cities.filter(
+        (city) => city.name === this.cityName.toLowerCase()
+      ).length;
+    },
+  },
+
+  watch: {
+    cityName() {
+      this.isError = false;
     },
   },
 
@@ -51,7 +59,13 @@ export default {
       if (this.isDuplicate) {
         return;
       }
-      this.addCity(this.city);
+      this.addCity(this.cityName)
+        .then(() => {
+          this.cityName = '';
+        })
+        .catch(() => {
+          this.isError = true;
+        });
     },
   },
 };

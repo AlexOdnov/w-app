@@ -11,6 +11,9 @@
         <add-city-form />
       </modal>
     </transition>
+    <transition name="preloader">
+      <preloader v-show="isLoad" />
+    </transition>
   </div>
 </template>
 
@@ -19,9 +22,10 @@ import { mapActions, mapMutations, mapState } from 'vuex';
 import SiteNavigation from './components/SiteNavigation.vue';
 import Modal from './components/Modal.vue';
 import AddCityForm from './components/AddCityForm.vue';
+import Preloader from './components/Preloader.vue';
 
 export default {
-  components: { SiteNavigation, Modal, AddCityForm },
+  components: { SiteNavigation, Modal, AddCityForm, Preloader },
 
   data() {
     return {
@@ -29,7 +33,7 @@ export default {
     };
   },
 
-  computed: { ...mapState(['isDark']) },
+  computed: { ...mapState(['isDark', 'isLoad']) },
 
   methods: {
     ...mapActions(['getTheme', 'getCities']),
@@ -90,6 +94,12 @@ export default {
 }
 .modal-enter-from,
 .modal-leave-to {
+  opacity: 0;
+}
+.preloader-leave-active {
+  transition: opacity 0.2s 0.3s;
+}
+.preloader-leave-to {
   opacity: 0;
 }
 </style>
