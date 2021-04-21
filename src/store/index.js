@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { localStorageServices } from './../services/localStorageServices';
-import { loadCurrentWeather } from './../services/weatherApi';
+import { loadCityForecast, loadCurrentWeather } from './../services/weatherApi';
 
 export default createStore({
   state: {
@@ -8,6 +8,7 @@ export default createStore({
     isLoad: true,
     cities: [],
     currentWeathers: [],
+    citiesForecast: {},
   },
   mutations: {
     toggleTheme(state) {
@@ -31,6 +32,9 @@ export default createStore({
       state.currentWeathers = state.currentWeathers.filter(
         (weather) => weather.name.toLowerCase() !== cityName.toLowerCase()
       );
+    },
+    addCityForecast(state, { cityName, cityForecast }) {
+      state.citiesForecast[cityName.toLowerCase()] = cityForecast;
     },
   },
   actions: {
@@ -111,13 +115,44 @@ export default createStore({
           .then((responses) =>
             responses.forEach((res) => commit('addCurrentWeather', res))
           )
-          .then(commit('changeLoadingState', false));
+          .then(() => commit('changeLoadingState', false));
       } else {
         //без таймаута прелоадер не успевает отобразится
         setTimeout(() => {
           commit('changeLoadingState', false);
         }, 0);
       }
+    },
+    getCityForecast({ commit, getters }, cityName) {
+      commit('changeLoadingState', true);
+      if (!getters.forecastByCityName(cityName)) {
+        const coord = getters.coordByCityName(cityName);
+        loadCityForecast(coord.lat, coord.lon)
+          .then((response) => response.json())
+          .then((response) =>
+            commit('addCityForecast', { cityName, cityForecast: response })
+          )
+          .then(() => commit('changeLoadingState', false));
+      } else {
+        //без таймаута прелоадер не успевает отобразится
+        setTimeout(() => {
+          commit('changeLoadingState', false);
+        }, 0);
+      }
+    },
+  },
+  getters: {
+    forecastByCityName: (state) => (cityName) => {
+      return state.citiesForecast[cityName.toLowerCase()];
+    },
+    coordByCityName: (state) => (cityName) => {
+      const city = state.cities.find(
+        (city) => city.name === cityName.toLowerCase()
+      );
+      return {
+        lon: city.lon,
+        lat: city.lat,
+      };
     },
   },
   modules: {},
