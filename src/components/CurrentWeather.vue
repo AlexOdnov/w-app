@@ -2,7 +2,14 @@
   <div class="current-weather">
     <h1 class="current-weather__title">{{ cityName }}</h1>
     <p class="current-weather__date">{{ currentDate }}</p>
-    <div class="current-weather__temperature"></div>
+    <current-temperature
+      class="current-weather__temperature"
+      :sunrise="currentWeather.sunrise"
+      :sunset="currentWeather.sunset"
+      :temperature="currentWeather.temp"
+      :feels-like="currentWeather.feels_like"
+      :description="currentWeather.weather[0].description"
+    />
     <div class="current-weather__wind"></div>
     <div class="current-weather__pressure"></div>
     <div class="current-weather__humidity"></div>
@@ -11,8 +18,12 @@
 </template>
 
 <script>
+import CurrentTemperature from './CurrentTemperature.vue';
+
 export default {
   name: 'CurrentWeather',
+
+  components: { CurrentTemperature },
 
   props: {
     cityName: {
@@ -73,5 +84,10 @@ export default {
     grid-column: -1 / -3;
     justify-self: end;
   }
+}
+.current-weather__temperature {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin: 20px 0;
 }
 </style>
