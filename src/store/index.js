@@ -67,9 +67,7 @@ export default createStore({
             localStorageServices.setItem('cities', state.cities);
             resolve();
           })
-          .catch(() => {
-            reject();
-          });
+          .catch(() => reject());
       });
     },
     removeCity({ commit, state }, cityName) {
@@ -80,9 +78,7 @@ export default createStore({
     getCities({ commit }) {
       const cities = localStorageServices.getItem('cities');
       if (cities) {
-        cities.forEach((city) => {
-          commit('addCity', city);
-        });
+        cities.forEach((city) => commit('addCity', city));
       }
     },
     getCurrentWeather({ commit }, cityName) {
@@ -98,15 +94,12 @@ export default createStore({
               resolve({ lon: response.coord.lon, lat: response.coord.lat });
             }
           })
-          .finally(() => {
-            commit('changeLoadingState', false);
-          });
+          .finally(() => commit('changeLoadingState', false));
       });
     },
     getCurrentWeathers({ commit, state }) {
       commit('changeLoadingState', true);
-      if (state.cities.length !== state.currentWeathers.length) {
-        state.currentWeathers = [];
+      if (!state.currentWeathers.length) {
         const response = state.cities.map((city) => {
           return loadCurrentWeather(city.name);
         });
@@ -118,9 +111,7 @@ export default createStore({
           .then(() => commit('changeLoadingState', false));
       } else {
         //без таймаута прелоадер не успевает отобразится
-        setTimeout(() => {
-          commit('changeLoadingState', false);
-        }, 0);
+        setTimeout(() => commit('changeLoadingState', false), 0);
       }
     },
     getCityForecast({ commit, getters }, cityName) {
@@ -135,9 +126,7 @@ export default createStore({
           .then(() => commit('changeLoadingState', false));
       } else {
         //без таймаута прелоадер не успевает отобразится
-        setTimeout(() => {
-          commit('changeLoadingState', false);
-        }, 0);
+        setTimeout(() => commit('changeLoadingState', false), 0);
       }
     },
   },
