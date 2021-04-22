@@ -73,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .current-temperature {
   display: grid;
-  grid-template-columns: 100px 1fr 100px;
+  grid-template-columns: 70px 1fr 70px;
   align-items: center;
   gap: 10px;
   text-align: center;
@@ -89,7 +89,7 @@ export default {
 }
 .current-temperature__temperature {
   grid-column: 1 / -1;
-  font-size: 100px;
+  font-size: 94px;
   line-height: 1.1;
   font-weight: normal;
 

@@ -10,26 +10,22 @@
       :feels-like="currentWeather.feels_like"
       :description="currentWeather.weather[0].description"
     />
-    <additional-info
-      title="Ветер"
-      :value="currentWeather.wind_speed"
-      :addition="windDirection"
-    >
+    <additional-info title="Ветер" :value="windSpeed" :addition="windDirection">
       <template #unit>м/с</template>
-    </additional-info>
-    <additional-info title="Влажность" :value="currentWeather.humidity">
-      <template #unit>
-        <span class="centered">%</span>
-      </template>
-    </additional-info>
-    <additional-info title="Осадки" :value="precipitation">
-      <template #unit>мм</template>
     </additional-info>
     <additional-info
       title="Давление"
       :value="pressureInmmHg"
       addition="рт. ст."
     >
+      <template #unit>мм</template>
+    </additional-info>
+    <additional-info title="Влажность" :value="humidity">
+      <template #unit>
+        <span class="centered">%</span>
+      </template>
+    </additional-info>
+    <additional-info title="Осадки" :value="precipitation">
       <template #unit>мм</template>
     </additional-info>
   </div>
@@ -70,16 +66,22 @@ export default {
         options
       );
     },
-    pressureInmmHg() {
-      return this.currentWeather.pressure * 0.75;
+    windSpeed() {
+      return Math.round(this.currentWeather.wind_speed);
     },
     windDirection() {
       return getWindDirection(this.currentWeather.wind_deg);
     },
+    pressureInmmHg() {
+      return Math.round(this.currentWeather.pressure * 0.75);
+    },
+    humidity() {
+      return Math.round(this.currentWeather.humidity);
+    },
     precipitation() {
       const perc =
         this.currentWeather.rain?.['1h'] || this.currentWeather.snow?.['1h'];
-      return perc ? perc : 0;
+      return perc ? +perc.toFixed(1) : 0;
     },
   },
 };

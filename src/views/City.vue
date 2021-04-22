@@ -60,5 +60,6 @@ export default {
 .forecast__current {
   grid-column: 1 / 2;
   max-width: 480px;
+  width: 100%;
 }
 </style>
