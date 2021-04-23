@@ -9,15 +9,15 @@
         :date="date(dailyForecast[index].dt)"
         :description="dailyForecast[index].weather[0].description"
         :condition="dailyForecast[index].weather[0].icon"
-        :maxTemp="dailyForecast[index].temp.day"
-        :minTemp="dailyForecast[index].temp.night"
+        :maxTemp="dailyForecast[index].temp.max"
+        :minTemp="dailyForecast[index].temp.min"
         :windSpeed="dailyForecast[index].wind_speed"
         :windDeg="dailyForecast[index].wind_deg"
         :humidity="dailyForecast[index].humidity"
         :pressure="dailyForecast[index].pressure"
         :precipitation="{
-          rain: dailyForecast[index].rain?.['1h'],
-          snow: dailyForecast[index].snow?.['1h'],
+          rain: dailyForecast[index].rain,
+          snow: dailyForecast[index].snow,
         }"
       />
     </forecast-slider>
