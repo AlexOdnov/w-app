@@ -1,8 +1,8 @@
 <template>
-  <div class="additional-info">
-    <h3 class="additional-info__title">
+  <div class="additional-info" role="group">
+    <p class="additional-info__title">
       {{ title }}
-    </h3>
+    </p>
     <div class="additional-info__content">
       <span class="additional-info__value">
         {{ value }}
