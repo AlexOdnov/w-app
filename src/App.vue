@@ -97,7 +97,7 @@ export default {
   opacity: 0;
 }
 .preloader-leave-active {
-  transition: opacity 0.2s 0.3s;
+  transition: opacity 0.2s 0.5s;
 }
 .preloader-leave-to {
   opacity: 0;

@@ -102,17 +102,22 @@ export default {
 }
 .current-weather__title {
   grid-column: 1 / -1;
-  justify-self: start;
+  place-self: start center;
   text-transform: capitalize;
+  line-height: 36px;
 
   @media (min-width: 480px) {
     grid-column: 1 / 3;
+    justify-self: start;
   }
 }
 .current-weather__date {
   grid-column: 1 / -1;
+  align-self: start;
   font-size: 20px;
   text-transform: capitalize;
+  text-align: center;
+  line-height: 36px;
 
   @media (min-width: 480px) {
     grid-column: -1 / -3;

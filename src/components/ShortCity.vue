@@ -40,7 +40,7 @@
         <svg
           width="32px"
           height="32px"
-          aria-label="Облачно"
+          :aria-label="weatherDescription"
           role="img"
           focusable="false"
         >
