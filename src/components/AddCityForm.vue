@@ -59,7 +59,7 @@ export default {
       if (this.isDuplicate) {
         return;
       }
-      this.addCity(this.cityName)
+      this.addCity(this.cityName.trim())
         .then(() => {
           this.cityName = '';
         })
