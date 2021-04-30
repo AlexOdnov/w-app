@@ -44,6 +44,7 @@ export default {
       const options = {
         hour: 'numeric',
         minute: 'numeric',
+        weekday: 'short',
       };
       return new Date(date * 1000).toLocaleString('ru-ru', options);
     },

@@ -131,6 +131,8 @@ export default {
 }
 .forecast__date {
   font-size: 16px;
+  text-align: center;
+  max-width: 55px;
 }
 .forecast__max-min-temp {
   position: relative;
