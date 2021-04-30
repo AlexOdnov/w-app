@@ -17,24 +17,12 @@
     ></video>
     <div class="short-city__cover">
       <h2 class="short-city__name">{{ cityName }}</h2>
-      <button
+      <icon-button
         class="short-city__delete"
-        type="button"
-        aria-label="Удалить город"
+        label="Удалить город"
+        icon="close"
         @click.prevent="deleteCity"
-      >
-        <svg
-          width="24px"
-          height="24px"
-          aria-hidden="true"
-          role="img"
-          focusable="false"
-        >
-          <use
-            :xlink:href="require('../assets/baseIcons.svg') + '#close'"
-          ></use>
-        </svg>
-      </button>
+      />
       <p class="short-city__description">{{ weatherDescription }}</p>
       <div class="short-city__weather">
         <svg
@@ -60,6 +48,7 @@
 
 <script>
 import getVideoForCondition from '../helpers/getVideoForCondition.js';
+import IconButton from './IconButton.vue';
 
 export default {
   name: 'ShortCity',
@@ -86,6 +75,8 @@ export default {
       required: true,
     },
   },
+
+  components: { IconButton },
 
   emits: ['deleteCity'],
 
@@ -169,30 +160,17 @@ export default {
   transition: color 0.3s;
 }
 .short-city__delete {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   grid-column: -1 / -2;
   justify-self: end;
   align-self: start;
-  color: var(--color);
-  background-color: transparent;
-  border: none;
   transition: color 0.3s;
-  outline: none;
 
   &:hover {
-    filter: drop-shadow(0 0 2px rgba(#ff0000, 0.6));
-    color: rgba(#ff0000, 0.6);
+    --color: #ff0000;
   }
 
   &:focus-visible {
-    filter: drop-shadow(0 0 2px rgba(#ff0000, 0.6));
-    color: rgba(#ff0000, 0.6);
-  }
-
-  @media (min-width: 480px) {
-    padding: 4px;
+    --color: #ff0000;
   }
 }
 .short-city__description {

@@ -125,7 +125,7 @@ export default {
   font-size: 20px;
   line-height: 1;
   pointer-events: none;
-  transition: 0.5s;
+  transition: top 0.5s, font-size 0.5s;
 }
 .add-city__error {
   position: absolute;
@@ -146,15 +146,11 @@ export default {
   text-transform: uppercase;
   background-color: transparent;
   border: none;
-  transition: text-shadow 0.3s;
-  outline: none;
+  transition: opacity 0.3s;
 
-  &:hover {
-    text-shadow: 0 0 2px var(--color);
-  }
-
+  &:hover,
   &:focus-visible {
-    text-shadow: 0 0 2px var(--color);
+    opacity: 0.7;
   }
 }
 .error-enter-active,

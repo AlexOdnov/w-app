@@ -59,8 +59,8 @@ export default {
     transition: opacity 0.3s;
   }
 
-  &:hover {
-    outline: none;
+  &:hover,
+  &:focus-visible {
     svg {
       opacity: 0.7;
     }
