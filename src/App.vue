@@ -81,7 +81,7 @@ export default {
   color: var(--color);
   font-weight: bold;
   background-color: var(--bgColor);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s;
 }
 #site-navigation {
   position: sticky;
