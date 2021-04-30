@@ -99,7 +99,8 @@ export default createStore({
     },
     getCurrentWeathers({ commit, state }) {
       commit('changeLoadingState', true);
-      if (!state.currentWeathers.length) {
+      if (state.currentWeathers.length !== state.cities.length) {
+        state.cities.forEach((el) => commit('removeCurrentWeather', el.name));
         const response = state.cities.map((city) => {
           return loadCurrentWeather(city.name);
         });
