@@ -11,17 +11,19 @@
       :windSpeed="weather.wind.speed"
       @deleteCity="removeCity"
     />
+    <add-city-form v-if="!currentWeathers.length" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import ShortCity from '../components/ShortCity.vue';
+import AddCityForm from '../components/AddCityForm.vue';
 
 export default {
   name: 'Home',
 
-  components: { ShortCity },
+  components: { ShortCity, AddCityForm },
 
   computed: {
     ...mapState(['currentWeathers']),
